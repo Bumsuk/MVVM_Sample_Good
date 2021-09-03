@@ -6,6 +6,7 @@
 //
 
 import Combine
+import Foundation
 
 // https://levelup.gitconnected.com/building-an-ios-app-using-swiftui-combine-mvvm-part-2-a0a703269907
 // https://github.com/quickbirdstudios/SwiftUI-Architectures/blob/master/QBChat-MVVM/QBChat-MVVM/MVVM/ViewModel.swift
@@ -18,6 +19,7 @@ protocol ViewModel: ObservableObject where ObjectWillChangePublisher.Output == V
     func trigger(_ input: Input)
 }
 
+@dynamicMemberLookup // ! 와.... 대박인데? 꼭 이해해야겠네. 멤버를 막 찾아가네??
 final class AnyViewModel<State, Input>: ViewModel {
     
     // MARK: Stored properties
@@ -39,6 +41,7 @@ final class AnyViewModel<State, Input>: ViewModel {
         wrappedTrigger(input)
     }
     
+    // dynamicMemberLookup! 구현필!
     subscript<Value>(dynamicMember keyPath: KeyPath<State, Value>) -> Value {
         state[keyPath: keyPath]
     }
@@ -48,5 +51,11 @@ final class AnyViewModel<State, Input>: ViewModel {
         self.wrappedObjectWillChange = { viewModel.objectWillChange.eraseToAnyPublisher() }
         self.wrappedState = { viewModel.state }
         self.wrappedTrigger = viewModel.trigger
+    }
+}
+
+extension AnyViewModel: Identifiable where State: Identifiable {
+    var id: State.ID {
+        state.id
     }
 }

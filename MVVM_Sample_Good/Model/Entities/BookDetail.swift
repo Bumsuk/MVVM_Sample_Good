@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 struct BookDetail {
     var id: String
@@ -18,4 +19,10 @@ struct BookDetail {
     var description: String
     var imageName: String
     var isAvailable: Bool
+}
+
+extension BookDetail {
+    var image: Image {
+        ImageStore.shared.image(name: imageName)
+    }
 }
