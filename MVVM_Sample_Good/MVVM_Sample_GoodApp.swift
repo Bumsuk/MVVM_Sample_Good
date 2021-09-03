@@ -11,7 +11,7 @@ import SwiftUI
 struct MVVM_Sample_GoodApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            BookListView(viewModel: AnyViewModel<BookListState, Never>(BookListViewModel(service: MockBookService())))
         }
     }
 }

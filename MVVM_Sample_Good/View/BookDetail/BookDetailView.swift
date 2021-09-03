@@ -20,8 +20,8 @@ enum BookDetailInput {
 }
 
 // MARK: - Book Detail
-struct BookDetailView: View {
 
+struct BookDetailView: View {
     @ObservedObject
     var viewModel: AnyViewModel<BookDetailState, BookDetailInput>
 
@@ -34,7 +34,6 @@ struct BookDetailView: View {
 
     var body: some View {
         VStack {
-            
             BookDetailImage(image: viewModel.bookDetail.image)
 
             Spacer()
@@ -46,7 +45,6 @@ struct BookDetailView: View {
             Text(viewModel.bookDetail.title)
                 .font(.system(size: 24, weight: .semibold))
                 .padding([.leading, .trailing], 20)
-
 
             Spacer()
                 .frame(height: 20)
@@ -63,7 +61,6 @@ struct BookDetailView: View {
             HStack(spacing: 20) {
                 ForEach(0 ..< viewModel.bookDetail.genre.count, id: \.self) { index in
                     BookDetailLabel(text: self.viewModel.bookDetail.genre[index].description)
-
                 }
                 BookDetailLabel(text: viewModel.bookDetail.kind)
             }
@@ -72,8 +69,6 @@ struct BookDetailView: View {
             Divider()
                 .padding(.bottom, 30)
                 .padding([.leading, .trailing], 20)
-
-
 
             if viewModel.bookDetail.isAvailable {
                 // Read button
@@ -91,12 +86,12 @@ struct BookDetailView: View {
                     self.showAlert = true
                 }) {
                     BookDetailButton(text: "Buy for " + String(viewModel.bookDetail.price) + "$",
-                    buttonColor: Color.black)
+                                     buttonColor: Color.black)
                 }
                 .alert(isPresented: $showAlert) {
                     Alert(title: Text("Book added to cart"), message: Text("You're ready to proceed to checkout and complete your order."), dismissButton: .default(Text("Done")))
                 }
-            }           
+            }
         }
 
         // NavBar item - Checkout button
@@ -113,6 +108,7 @@ struct BookDetailView: View {
 }
 
 // MARK: - Private extension
+
 private extension BookDetailView {
     func addToCart() {
         viewModel.trigger(.addBookToCart)
@@ -128,4 +124,3 @@ struct BookDetailView_Previews: PreviewProvider {
         return BookDetailView(service: MockBookService(), bookId: 0)
     }
 }
-
