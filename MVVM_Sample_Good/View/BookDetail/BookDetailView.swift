@@ -22,20 +22,19 @@ enum BookDetailInput {
 // MARK: - Book Detail
 
 struct BookDetailView: View {
-    @ObservedObject
-    var viewModel: AnyViewModel<BookDetailState, BookDetailInput>
+    @StateObject var viewModel: AnyViewModel<BookDetailState, BookDetailInput>
 
     @State private var showModal = false
     @State private var showAlert = false
 
     init(service: BookService, bookId: Int) {
-        self.viewModel = AnyViewModel(BookDetailViewModel(service: service, id: bookId))
+        self._viewModel = StateObject(wrappedValue: AnyViewModel(BookDetailViewModel(service: service, id: bookId)))
     }
 
     var body: some View {
         VStack {
             BookDetailImage(image: viewModel.bookDetail.image)
-
+            
             Spacer()
                 .frame(height: 30)
 

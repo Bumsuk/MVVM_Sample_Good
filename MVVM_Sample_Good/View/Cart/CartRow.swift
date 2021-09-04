@@ -30,7 +30,7 @@ struct CartRow: View {
 
 struct CartRow_Previews: PreviewProvider {
     static var previews: some View {
-        let book = Book(id: 0, title: "The Fellowship of the Ring", author: "J. R. R. Tolkien", price: 18.85, imageName: "fellowship")
+        let book = Book(id: 0, title: "The Fellowship of the Ring", author: "J. R. R. Tolkien", price: 18.85, imageName: "fellow")
         let item = Item(id: "0", item: book, units: 2)
         return CartRow(item: item)
     }
